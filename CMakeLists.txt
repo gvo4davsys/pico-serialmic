@@ -2,21 +2,16 @@ cmake_minimum_required(VERSION 3.13)
 
 include(pico_sdk_import.cmake)
 
-set(project_name serialmic)
-project(${project_name})
+project(pico_serialmic)
 
 pico_sdk_init()
 
-add_executable(${project_name}
-	main.c
-)
+add_library(pico_serialmic INTERFACE)
 
-pico_enable_stdio_usb(${project_name} 1)
-pico_enable_stdio_uart(${project_name} 0)
+target_sources(pico_serialmic INTERFACE
+	${CMAKE_CURRENT_LIST_DIR}/machine_i2s.c)
 
-pico_add_extra_outputs(${project_name})
-
-target_link_libraries(${project_name}
+target_link_libraries(pico_serialmic INTERFACE
 	pico_stdlib
 	hardware_pio
 	hardware_irq
